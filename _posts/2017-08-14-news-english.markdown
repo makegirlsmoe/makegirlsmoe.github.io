@@ -67,4 +67,4 @@ and our choice of  [SRResNet](https://arxiv.org/abs/1609.04802) generator make t
 Speed-wise, even all computations are done on the client side, it takes about only $$6\sim 7$$ seconds to generate one images on average.
 
 
-#### For more technical details, check out the [technical report](http://make.girls.moe/technical_report.pdf).
+#### For more technical details, check out the [technical report]({{ site.url }}/assets/pdf/technical_report.pdf).
