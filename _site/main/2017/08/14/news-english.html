@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  
+  <head>
+  <meta charset="UTF-8">
+  <title>MakeGirls.moe Offical Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#157878">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/cayman.css">
+  <script type="text/javascript"
+      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+</head>
+
+
+  <body>
+    <section class="page-header">
+  <h1 class="project-name">MakeGirls.moe Offical Blog</h1>
+</section>
+
+
+    <section class="main-content">
+      
+      <h1 id="create-anime-characters-with-ai-">Create Anime Characters with A.I. !</h1>
+
+<p>We all love anime characters and are tempted to create our custom ones,
+but most of us simply cannot do that just because we are not pros.
+What if anime characters can be automatically generated in a professional level quality?
+Image that you just specify some attributes such as blonde/twin tail/smile and an anime character with your customization is generated whiteout any further intervention!</p>
+
+<p>Already we have some pioneers in the anime generation, such as <a href="https://github.com/pfnet-research/chainer-gan-lib">ChainerDCGAN</a>, <a href="http://qiita.com/rezoolab/items/5cc96b6d31153e0c86bc">Chainerを使ってコンピュータにイラストを描かせる</a>, and online-available code such as <a href="https://github.com/tdrussell/IllustrationGAN">IllustrationGAN</a> and <a href="https://github.com/jayleicn/animeGAN">AnimeGAN</a>.
+But very often results generated these models are <a href="https://github.com/jayleicn/animeGAN/blob/master/images/fake_sample.png">blurred</a>] and <a href="https://qiita-image-store.s3.amazonaws.com/0/61296/7838e32d-1ca9-be96-ddd9-2e400be99ea1.jpeg">distorted</a>,
+and it is still a challenge to generate industry-standard facial images for anime characters. As a step towards tackling this challenge, we propose a model that produces anime faces at high quality with promising rate of success.</p>
+
+<h4 id="dataset-a-model-of-good-quality-begins-with-a-clean-dataset">Dataset: a Model of Good Quality Begins with a Clean Dataset.</h4>
+
+<p>To teach computer to do things requires high quality data, and our case is not an exception.
+Large scale image boards like
+<a href="https://danbooru.donmai.us">Danbooru</a> and <a href="https://safebooru.org">Safebooru</a> are noisy and we think this is at least partial reason for issues in previous works,
+so instead we use standing pictures (<a href="http://dic.nicovideo.jp/a/%E7%AB%8B%E3%81%A1%E7%B5%B5">立ち絵</a>) from games sold on <a href="www.getchu.com">Getchu</a>, a website providing information and selling of Japanese games.
+Standing pictures are diverse enough since they are of different styles for games in a diverse sets of theme, yet consisting since they are all belonging to domain of character images.
+We also need categorical metadata (a.k.a tags/attributes) of images like hair color, whether smiling or not.
+Getchu does not provide such metadata, so we use <a href="saito2015illustration2vec">Illustration2Vec</a>, a <a href="https://cs231n.github.io/convolutional-networks/">CNN</a>-based tool for estimating tags of anime.</p>
+
+<h4 id="model-the-essential-part">Model: The Essential Part</h4>
+
+<p>A good generative model is also a must-have for our goal.
+The generator should know and follow user’s specified attributes, which is called <em>prior</em>,
+and should also have freedom to generate different, detailed visual features, which is modeled using <em>noise</em>.
+We use a popular framework called GAN (<a href="https://papers.nips.cc/paper/5423-generative-adversarial-nets">Generative Adversarial Networks</a>).
+GAN uses a generator network <script type="math/tex">G</script> to generate images from <em>prior</em> and <em>noise</em>,
+and also a another network <script type="math/tex">D</script> trying to distinguish <script type="math/tex">G</script>’s generated images from real images.
+We train them, and in the end <script type="math/tex">G</script> should be able to generate images so realistic that <script type="math/tex">D</script> cannot differentiate them from real images with that <em>prior</em>.
+However it is infamously hard and time-consuming to properly train GAN.
+Luckily a recent advance, named <a href="https://arxiv.org/abs/1705.07215">DRAGAN</a>,
+can give presumable results compare to other GANs with least computation power required.
+We successfully train the DRAGAN whose generate is <a href="https://arxiv.org/abs/1609.04802">SRResNet</a>-like.
+Also, we need our generator to know the label information so user’s customization can be used. Inspired by <a href="https://arxiv.org/abs/1610.09585">ACGAN</a>,
+we feed the labels to the generator <script type="math/tex">G</script> along with noise and add a multi-label classifier on the top of discriminator <script type="math/tex">D</script>, which is asked to predict the assigned tags for the images.</p>
+
+<p>With the data and model, we train it straightforwardly with <a href="http://www.nvidia.com/object/machine-learning.html">GPU-powered</a> machines.</p>
+
+<h4 id="samples-a-picture-is-worth-a-thousand-words">Samples: A Picture is Worth a Thousand Words</h4>
+
+<p>To taste the quality of our model, see the generated images like the following: it handles different attributes and visual features well.</p>
+
+<center><img src="http://localhost:4000/assets/news-img/samples.jpg" align="middle" width="500" /></center>
+
+<p>One interesting setting would be fixing the random <em>noise</em> part and sampling random <em>priors</em>. The model now is required to generate images have similar major visual features with different attribute combinations, and it does well:</p>
+
+<center><img src="http://localhost:4000/assets/news-img/fixed_noise.jpg" align="middle" width="500" /></center>
+
+<p>Also, by fixing <em>priors</em> and sampling randomly the <em>noise</em>, the model can generate images have the same attributes with different visual features:</p>
+
+<center><img src="http://localhost:4000/assets/news-img/fix_attributes_a.png" align="middle" width="500" /></center>
+
+<h4 id="web-interface-bring-neural-generator-to-your-browser">Web Interface: Bring Neural Generator to your Browser</h4>
+
+<p>In order to make our model more accessible, we build a <a href="http://make.girls.moe">website interface</a> with <a href="https://facebook.github.io/react/">React.js</a> for open access.
+We make the generation completely done on the browser side, by imposing <a href="https://mil-tokyo.github.io/webdnn/">WebDNN</a> and converting the trained <a href="https://chainer.org/">Chainer</a> model to the <a href="http://webassembly.org/">WebAssembly</a>-based Javascript model.
+For a better user experience, we would like to keep the size of generator model small since users need to download the model before generating,
+and our choice of  <a href="https://arxiv.org/abs/1609.04802">SRResNet</a> generator make the model <script type="math/tex">4</script> times smaller than the popular <a href="https://arxiv.org/abs/1511.06434">DCGAN</a> generator without compromising on the quality of results.
+Speed-wise, even all computations are done on the client side, it takes about only <script type="math/tex">6\sim 7</script> seconds to generate one images on average.</p>
+
+<h4 id="for-more-technical-details-check-out-the-technical-report">For more technical details, check out the <a href="http://make.girls.moe/technical_report.pdf">technical report</a>.</h4>
+
+
+      <footer class="site-footer">
+  <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+</footer>
+
+
+    </section>
+
+  </body>
+</html>
