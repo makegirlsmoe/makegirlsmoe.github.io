@@ -21,11 +21,11 @@ As a step towards tackling this challenge, we propose a model that produces high
 
 To teach computers to do things requires high quality data, and our case is not an exception.
 The quality of images on large scale image boards like [Danbooru](https://danbooru.donmai.us) and [Safebooru](https://safebooru.org) varies wildly, and we think this is at least part of the reason for the quality issues in previous works.
-So, instead, we use "standing pictures" ([立ち絵](http://dic.nicovideo.jp/a/%E7%AB%8B%E3%81%A1%E7%B5%B5)) from games sold on [Getchu](www.getchu.com), a website for learning about and purchasing Japanese games.
+So, instead, we use "standing pictures" ([立ち絵](http://dic.nicovideo.jp/a/%E7%AB%8B%E3%81%A1%E7%B5%B5)) from games sold on [Getchu](http://www.getchu.com), a website for learning about and purchasing Japanese games.
 Standing pictures are diverse since they are rendered in different styles for different genres of game, yet reasonably consistent since they are all part of the domain of game character images.
 
 We also need categorical metadata (a.k.a tags/attributes) for the images, like hair color, and whether faces are smiling or not.
-Getchu does not provide such metadata, so we use [Illustration2Vec](saito2015illustration2vec), a [CNN](https://cs231n.github.io/convolutional-networks/)-based tool for predicting anime image tags.
+Getchu does not provide such metadata, so we use [Illustration2Vec](http://illustration2vec.net/), a [CNN](https://cs231n.github.io/convolutional-networks/)-based tool for predicting anime image tags.
 
 #### Model: The Essential Part
 
