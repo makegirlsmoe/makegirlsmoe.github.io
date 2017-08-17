@@ -76,9 +76,9 @@ We here introduce a more direct (and somewhat hackish) way to control over the n
 
 The first row, consisting of $$128$$ pixels, specifies the $$128$$-length noise vector $$v$$. The $$ i $$-th element of the noise vector ($$ v_i $$) is calculated using 
 
-$$  v_i = \sqrt{ -2  \log (1 - B\_{i} / 256) } \cdot \cos{ ( 2 \pi (1 - G\_{i} / 256) ) }  $$
+$$  v_i = \sqrt{ -2  \log (1 - B_{i} / 256) } \cdot \cos{ ( 2 \pi (1 - G_{i} / 256) ) }  $$
 
-with $$ G\_{i} $$ and $$ B\_{i} $$ are the values of the G channel and the B channel of the $$ i $$-th pixel respectively. The R channel (and the A channel, if exists) is/are ignored.
+with $$ G_{i} $$ and $$ B_{i} $$ are the values of the G channel and the B channel of the $$ i $$-th pixel respectively. The R channel (and the A channel, if exists) is/are ignored.
 
 PS: A noise vector with elements near $$0$$ usually generates good images.
 
