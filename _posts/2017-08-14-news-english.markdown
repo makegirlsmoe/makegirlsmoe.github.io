@@ -68,5 +68,12 @@ For a better user experience, we want to keep the size of the generator model sm
 and our choice of an [SRResNet](https://arxiv.org/abs/1609.04802) generator makes the model $$4$$ times smaller than the popular [DCGAN](https://arxiv.org/abs/1511.06434) generator without compromising on the quality of results.
 Speed-wise, even though all computations are done on the client side, it still only takes about $$6\sim 7$$ seconds on average to generate an image.
 
+##### For People who Want to Play with Noise:
+
+For a more direct (and somewhat hackish) control over the noise by directly specifying via image, we here detail the format of image used for import/export noise. The image must be colored, with resolution of $$128 \times 34$$ ($$128$$ columns by $32$ rows). Only the first row is used, and the rest rows are ignores, as in
+
+<center><img src="{{ site.url }}/assets/news-img/noise-explain.png" align="middle" width="200"></center>
+
+The first row, consisting of $$128$$ pixels, specifies the $$128$$-lengthed noise vecter $$v$$, such that if the $$i$$-th pixel is (R,G,B) where R, G, B stand for color channels, the $$i$$-th element of the noise vector is calcuated using $$  \sqrt{ -2  \log (1 - B / 256) } \cos{ 2 \pi (1 - G / 256) }  $$ . Note that the R channel (and A channel, if exists) is/are ingored.
 
 #### For more technical details, check out the [technical report]({{ site.url }}/assets/pdf/technical_report.pdf).
