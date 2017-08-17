@@ -68,19 +68,4 @@ For a better user experience, we want to keep the size of the generator model sm
 and our choice of an [SRResNet](https://arxiv.org/abs/1609.04802) generator makes the model $$4$$ times smaller than the popular [DCGAN](https://arxiv.org/abs/1511.06434) generator without compromising on the quality of results.
 Speed-wise, even though all computations are done on the client side, it still only takes about $$6\sim 7$$ seconds on average to generate an image.
 
-##### For People who Want to Hack the Noise:
-
-We here introduce a more direct (and somewhat hackish) way to control over the noise. You can specify the noise by importing your own noise image. The noise image can be of common formats (such as PNG, JPG, etc.), and must be colored, with the resolution of $$128 \times 34$$ ($$128$$ columns by $$34$$ rows). In the process of importing noise, only the first row of the image is used, and the rest rows are ignored, as shown below:
-
-<center><img src="{{ site.url }}/assets/news-img/noise-explain.png" align="middle" width="500"></center>
-
-The first row, consisting of $$128$$ pixels, specifies the $$128$$-length noise vector $$v$$. The $$ i $$-th element of the noise vector ($$ v_i $$) is calculated using 
-
-$$  v_i = \sqrt{ -2  \log (1 - B_{i} / 256) } \cdot \cos{ ( 2 \pi (1 - G_{i} / 256) ) }  $$
-
-with $$ G_{i} $$ and $$ B_{i} $$ are the values of the G channel and the B channel of the $$ i $$-th pixel respectively. The R channel (and the A channel, if exists) is/are ignored.
-
-PS: A noise vector with elements near $$0$$ usually generates good images.
-
-
 #### For more technical details, check out the [technical report]({{ site.url }}/assets/pdf/technical_report.pdf).
