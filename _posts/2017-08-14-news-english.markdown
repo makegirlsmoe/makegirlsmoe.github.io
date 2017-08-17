@@ -70,11 +70,11 @@ Speed-wise, even though all computations are done on the client side, it still o
 
 ##### For People who Want to Play with Noise:
 
-For a more direct (and somewhat hackish) control over the noise by directly specifying via image, we here detail the format of image used for import/export noise. The image must be colored, with resolution of $$128 \times 34$$ ($$128$$ columns by $$34$$ rows). Only the first row is used, and the rest rows are ignores, as in
+For a more direct (and somewhat hackish) control over the noise by directly specifying via image, we here detail the format of image used for import/export noise. Only valid image can be used. The image can be of common formats, must be colored, with resolution of $$128 \times 34$$ ($$128$$ columns by $$34$$ rows). Only the first row is used, and the rest rows are ignores, as in
 
 <center><img src="{{ site.url }}/assets/news-img/noise-explain.png" align="middle" width="500"></center>
 
-The first row, consisting of $$128$$ pixels, specifies the $$128$$-length noise vector $$v$$, such that if the $$i$$-th pixel is (R,G,B) where R, G, B stand for color channels, the $$i$$-th element of the noise vector is calculated using $$  \sqrt{ -2  \log (1 - B / 256) } \cos{ 2 \pi (1 - G / 256) }  $$. Note that the R channel (and A channel, if exists) is/are ignored, and noise near $$0$$ are performing well.
+The first row, consisting of $$128$$ pixels, specifies the $$128$$-length noise vector $$v$$, such that if the $$ i $$ -th pixel is $$ R,G,B $$ (RGB color model, $$ R, G, B \in [0, 255] $$), the $$ i $$ -th element of the noise vector is calculated using $$  \sqrt{ -2  \log (1 - B / 256) } \cos{ ( 2 \pi (1 - G / 256) ) }  $$. Note that the R channel (and A channel, if exists) is/are ignored, and noise near $$0$$ are performing well.
 
 
 #### For more technical details, check out the [technical report]({{ site.url }}/assets/pdf/technical_report.pdf).
