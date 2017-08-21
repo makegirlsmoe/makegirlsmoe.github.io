@@ -68,4 +68,4 @@ For a better user experience, we want to keep the size of the generator model sm
 and our choice of an [SRResNet](https://arxiv.org/abs/1609.04802) generator makes the model $$4$$ times smaller than the popular [DCGAN](https://arxiv.org/abs/1511.06434) generator without compromising on the quality of results.
 Speed-wise, even though all computations are done on the client side, it still only takes about $$6\sim 7$$ seconds on average to generate an image.
 
-#### For more technical details, check out the [technical report]({{ site.url }}/assets/pdf/technical_report.pdf).
+#### For more technical details, check out our paper on [arXiv](https://arxiv.org/abs/1708.05509) which is initially available as the [techinical report]({{ site.url }}/assets/pdf/technical_report.pdf).
